@@ -1,0 +1,66 @@
+:root {
+  --toss-blue: #3182F6;
+  --toss-blue-dark: #1B64DA;
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F4F4F4;
+  --bg-tertiary: #E8E8E8;
+  --text-primary: #191F28;
+  --text-secondary: #4E5968;
+  --text-tertiary: #8B95A1;
+  --text-white: #FFFFFF;
+  --success: #34C759;
+  --error: #FF3B30;
+  --warning: #FF9500;
+
+  --color-test: #9B59B6;
+  --reaction-test: #E74C3C;
+  --memory-test: #3498DB;
+  --audio-test: #2ECC71;
+
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
+}
+
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+.safe-area {
+  padding-top: var(--safe-area-top);
+  padding-bottom: var(--safe-area-bottom);
+  padding-left: var(--safe-area-left);
+  padding-right: var(--safe-area-right);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+input, textarea {
+  font-family: inherit;
+}

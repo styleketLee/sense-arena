@@ -120,7 +120,10 @@ export function RecordPage({ navigate }: RecordPageProps) {
           );
         })}
 
-        {/* Banner Ad */}
+      </div>
+
+      {/* Banner Ad - 하단 고정 */}
+      <div style={{ flexShrink: 0, padding: '0 20px' }}>
         <BannerAd />
       </div>
     </div>

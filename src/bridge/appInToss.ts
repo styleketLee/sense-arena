@@ -27,7 +27,7 @@ export function loadInterstitialAd(adGroupId: string, onLoaded: () => void) {
     onEvent: (event) => {
       if (event.type === 'loaded') onLoaded();
     },
-    onError: (err) => console.warn('광고 로드 실패:', err),
+    onError: () => {},
   });
 }
 

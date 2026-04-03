@@ -20,7 +20,7 @@ export function RecordPage({ navigate }: RecordPageProps) {
   const testTypes: TestType[] = ['color', 'reaction', 'memory', 'audio'];
 
   return (
-    <div className="safe-area" style={{ minHeight: '100vh', backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column' }}>
+    <div className="safe-area" style={{ height: '100vh', backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       {/* Header */}
       <div style={{
         padding: '12px 20px',

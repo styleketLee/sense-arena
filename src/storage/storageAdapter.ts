@@ -22,7 +22,7 @@ async function load(): Promise<Record<TestType, TestRecord> | null> {
       const schema = migrate(parsed);
       return schema.records;
     } catch (error) {
-      console.error('Storage load failed:', error);
+      void error;
       return null;
     }
   }
@@ -43,7 +43,7 @@ async function save(records: Record<TestType, TestRecord>): Promise<boolean> {
       localStorage.setItem(STORAGE_KEY, raw);
       return true;
     } catch (error) {
-      console.error('Storage save failed:', error);
+      void error;
       return false;
     }
   }

@@ -69,7 +69,14 @@ export function AudioTest({ round, onCorrect, onWrong }: AudioTestProps) {
       osc.start();
       osc.stop(ctx.currentTime + duration);
 
+      const safetyTimeout = setTimeout(() => {
+        osc.disconnect();
+        gain.disconnect();
+        resolve();
+      }, duration * 1000 + 200);
+
       osc.onended = () => {
+        clearTimeout(safetyTimeout);
         osc.disconnect();
         gain.disconnect();
         resolve();

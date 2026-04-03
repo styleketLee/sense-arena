@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useRecordStore } from '../stores/recordStore';
 import { AD_GROUP_IDS } from '../domain/constants';
 import { getPercentileMessage } from '../domain/scoring';
@@ -14,8 +14,13 @@ interface ResultPageProps {
 }
 
 export function ResultPage({ testType, navigate }: ResultPageProps) {
+  const { isLoaded, loadRecords } = useRecordStore();
   const record = useRecordStore((s) => s.records[testType]);
   const latestResult = record.history[0];
+
+  useEffect(() => {
+    if (!isLoaded) loadRecords();
+  }, [isLoaded, loadRecords]);
   const [showResult, setShowResult] = useState(false);
   const [sharing, setSharing] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);

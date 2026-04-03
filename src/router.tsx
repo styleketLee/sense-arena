@@ -40,7 +40,7 @@ export function App() {
       TossAds.initialize({
         callbacks: {
           onInitialized: () => {},
-          onInitializationFailed: (error) => console.error('TossAds init failed:', error),
+          onInitializationFailed: () => {},
         },
       });
     }

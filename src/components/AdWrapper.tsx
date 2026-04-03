@@ -18,8 +18,8 @@ export function BannerAd({ adGroupId = AD_GROUP_IDS.banner }: BannerAdProps) {
       tone: 'blackAndWhite',
       variant: 'expanded',
       callbacks: {
-        onAdRendered: (payload) => console.log('Banner rendered:', payload.slotId),
-        onAdFailedToRender: (payload) => console.error('Banner failed:', payload.error.message),
+        onAdRendered: () => {},
+        onAdFailedToRender: () => {},
       },
     });
 

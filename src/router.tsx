@@ -13,10 +13,22 @@ type Route =
   | { page: 'result'; testType: TestType }
   | { page: 'record' };
 
-function parseInitialRoute(): Route {
-  const path = window.location.pathname.replace(/^\/+|\/+$/g, '');
+const VALID_TEST_TYPES = new Set<string>(['color', 'reaction', 'memory', 'audio']);
 
-  if (path === 'record') return { page: 'record' };
+function parseRoute(path: string): Route {
+  const cleaned = path.replace(/^\/+|\/+$/g, '');
+
+  if (cleaned === 'record') return { page: 'record' };
+
+  const testMatch = cleaned.match(/^test\/(.+)$/);
+  if (testMatch?.[1] && VALID_TEST_TYPES.has(testMatch[1])) {
+    return { page: 'test', testType: testMatch[1] as TestType };
+  }
+
+  const resultMatch = cleaned.match(/^result\/(.+)$/);
+  if (resultMatch?.[1] && VALID_TEST_TYPES.has(resultMatch[1])) {
+    return { page: 'result', testType: resultMatch[1] as TestType };
+  }
 
   return { page: 'home' };
 }
@@ -24,14 +36,14 @@ function parseInitialRoute(): Route {
 function routeToPath(route: Route): string {
   switch (route.page) {
     case 'home': return '/home';
-    case 'test': return '/home';
-    case 'result': return '/home';
+    case 'test': return `/test/${route.testType}`;
+    case 'result': return `/result/${route.testType}`;
     case 'record': return '/record';
   }
 }
 
 export function App() {
-  const [route, setRoute] = useState<Route>(parseInitialRoute);
+  const [route, setRoute] = useState<Route>(() => parseRoute(window.location.pathname));
 
   useEffect(() => {
     setDeviceOrientation({ type: 'portrait' });
@@ -46,9 +58,19 @@ export function App() {
     }
   }, []);
 
+  // 브라우저 뒤로가기 처리
+  useEffect(() => {
+    const handlePopState = () => {
+      setRoute(parseRoute(window.location.pathname));
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   const navigate = useCallback((next: Route) => {
     setRoute(next);
-    window.history.replaceState(null, '', routeToPath(next));
+    const path = routeToPath(next);
+    window.history.pushState(null, '', path);
   }, []);
 
   switch (route.page) {

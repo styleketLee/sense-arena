@@ -13,7 +13,7 @@ export function HomePage({ navigate }: HomePageProps) {
   const { records, isLoaded, loadRecords } = useRecordStore();
 
   useEffect(() => {
-    if (!isLoaded) loadRecords();
+    if (!isLoaded) loadRecords().catch(() => {});
   }, [isLoaded, loadRecords]);
 
   const testTypes: TestType[] = ['color', 'reaction', 'memory', 'audio'];

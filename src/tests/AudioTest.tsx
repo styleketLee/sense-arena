@@ -111,14 +111,24 @@ export function AudioTest({ round, onCorrect, onWrong }: AudioTestProps) {
 
     return () => {
       cancelledRef.current = true;
+    };
+  }, [question, playTone]);
+
+  // AudioContext는 컴포넌트 unmount 시 항상 정리
+  useEffect(() => {
+    return () => {
+      const ctx = audioCtxRef.current;
+      if (!ctx) return;
       try {
-        audioCtxRef.current?.close();
+        // 연결된 모든 노드 정리 후 컨텍스트 종료
+        ctx.destination.disconnect?.();
+        ctx.close();
       } catch {
         // ignore
       }
       audioCtxRef.current = null;
     };
-  }, [question, playTone]);
+  }, []);
 
   const handleAnswer = (answer: 'higher' | 'lower') => {
     if (answered || phase !== 'answer') return;

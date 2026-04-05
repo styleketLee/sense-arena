@@ -66,11 +66,11 @@ export const useRecordStore = create<RecordState>((set, get) => ({
     set({ records: newRecords });
 
     // 직렬화된 비동기 저장 (이전 저장 완료 후 다음 저장)
-    const doSave = async () => {
-      if (saveInFlight) await saveInFlight;
+    const prev = saveInFlight;
+    saveInFlight = (async () => {
+      await prev;
       await storageAdapter.save(newRecords);
-    };
-    saveInFlight = doSave().finally(() => { saveInFlight = null; });
+    })();
   },
 
   getBestScore: (testType) => get().records[testType].bestScore,

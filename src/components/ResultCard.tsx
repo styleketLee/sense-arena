@@ -43,7 +43,7 @@ export function ResultCard({ testType, score, percentile, onCanvasReady }: Resul
     ctx.fillStyle = 'rgba(255,255,255,0.7)';
     ctx.font = '600 14px -apple-system, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('센스 아레나', width / 2, 40);
+    ctx.fillText('감각측정소', width / 2, 40);
 
     // Test icon
     ctx.font = '48px serif';
@@ -56,7 +56,7 @@ export function ResultCard({ testType, score, percentile, onCanvasReady }: Resul
 
     // Score
     ctx.font = '800 64px -apple-system, sans-serif';
-    ctx.fillText(formatScore(testType, score), width / 2, 230);
+    ctx.fillText(formatScore(score), width / 2, 230);
 
     // Score unit
     ctx.fillStyle = 'rgba(255,255,255,0.8)';
@@ -83,7 +83,7 @@ export function ResultCard({ testType, score, percentile, onCanvasReady }: Resul
     // Footer
     ctx.fillStyle = 'rgba(255,255,255,0.4)';
     ctx.font = '400 12px -apple-system, sans-serif';
-    ctx.fillText('sense-arena.toss.im', width / 2, 425);
+    ctx.fillText('kamkak.toss.im', width / 2, 425);
 
     onCanvasReady?.(canvas);
   }, [testType, score, percentile, config, grade, onCanvasReady]);
@@ -122,8 +122,7 @@ function adjustBrightness(hex: string, amount: number): string {
   return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
 }
 
-function formatScore(testType: TestType, score: number): string {
-  if (testType === 'reaction') return `${score}`;
+function formatScore(score: number): string {
   return `${score}`;
 }
 

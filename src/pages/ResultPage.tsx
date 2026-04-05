@@ -16,11 +16,12 @@ interface ResultPageProps {
 export function ResultPage({ testType, navigate }: ResultPageProps) {
   const { isLoaded, loadRecords } = useRecordStore();
   const record = useRecordStore((s) => s.records[testType]);
-  const latestResult = record.history[0];
 
   useEffect(() => {
-    if (!isLoaded) loadRecords();
+    if (!isLoaded) loadRecords().catch(() => {});
   }, [isLoaded, loadRecords]);
+
+  const latestResult = isLoaded ? record.history[0] : undefined;
   const [showResult, setShowResult] = useState(false);
   const [sharing, setSharing] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -43,16 +44,24 @@ export function ResultPage({ testType, navigate }: ResultPageProps) {
   const handleShare = useCallback(async () => {
     if (!canvasRef.current || sharing) return;
     setSharing(true);
-    await shareResultImage(canvasRef.current);
-    setSharing(false);
+    try {
+      await shareResultImage(canvasRef.current);
+    } finally {
+      setSharing(false);
+    }
   }, [sharing]);
 
   const handleCanvasReady = useCallback((canvas: HTMLCanvasElement) => {
     canvasRef.current = canvas;
   }, []);
 
-  if (!latestResult) {
-    navigate({ page: 'home' });
+  useEffect(() => {
+    if (isLoaded && !record.history[0]) {
+      navigate({ page: 'home' });
+    }
+  }, [isLoaded, record.history, navigate]);
+
+  if (!isLoaded || !latestResult) {
     return null;
   }
 

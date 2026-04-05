@@ -53,7 +53,7 @@ export async function shareResultImage(canvas: HTMLCanvasElement): Promise<boole
     );
     if (!blob) return false;
 
-    const file = new File([blob], 'sense-arena-result.png', { type: 'image/png' });
+    const file = new File([blob], 'kamkak-result.png', { type: 'image/png' });
 
     if (navigator.share && navigator.canShare?.({ files: [file] })) {
       await navigator.share({
@@ -67,9 +67,9 @@ export async function shareResultImage(canvas: HTMLCanvasElement): Promise<boole
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'sense-arena-result.png';
+    a.download = 'kamkak-result.png';
     a.click();
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
     return true;
   } catch {
     return false;

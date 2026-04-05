@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-const AD_INTERVAL = 3; // 3회 무료 후 1회 광고, 이후 3회마다 반복
+const AD_INTERVAL = 3; // 3회마다 1회 광고 (3번째, 6번째, ...)
 
 interface AdCounterState {
   count: number;

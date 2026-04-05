@@ -46,7 +46,7 @@ export function generateAudioQuestion(round: number): AudioQuestion {
   const difficulty = Math.min(round, 15);
   const freqDiff = Math.max(5, 50 - difficulty * 3);
 
-  const baseFrequency = 200 + Math.random() * 600;
+  const baseFrequency = 250 + Math.random() * 500; // 250~750Hz (freqDiff 반영 안전 범위)
   const direction = Math.random() > 0.5 ? 1 : -1;
   const targetFrequency = baseFrequency + freqDiff * direction;
 
